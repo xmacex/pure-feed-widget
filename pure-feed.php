@@ -1,6 +1,6 @@
 <?php
 /*
-  Plugin Name: Pure widget
+  Plugin Name: Pure feed widget
   Plugin URL: https://github.com/xmacex/pure-widget
   Description: Render Pure feeds
   Author: Mace Ojala
@@ -13,7 +13,7 @@ class Pure_Widget extends WP_Widget
     public function __construct() {
         $widget_ops = array(
             'classname' => 'pure_widget',
-            'description' => 'Pure feed plugin'
+            'description' => 'Pure feed widget'
         );
         parent::__construct('pure_widget', 'Pure widget', $widget_ops);
 
@@ -21,7 +21,7 @@ class Pure_Widget extends WP_Widget
             'mad' => 'https://pure.itu.dk/portal/en/organisations/mad-art--design(cf9b4e6a-e1ad-41e3-9475-7679abe7131b)/publications.rss',
             'rosemary' => 'https://pure.itu.dk/portal/en/organisations/mad-art--design(cf9b4e6a-e1ad-41e3-9475-7679abe7131b)/publications.rss'
         );
-        
+
         $feedurl = $feeds['mad'];
         $this->xml = simplexml_load_file($feedurl);
     }
@@ -30,9 +30,10 @@ class Pure_Widget extends WP_Widget
     public function widget($args, $instance)
     {
         echo $args['before_widget'];
+
         $feedurl = $instance['url'];
         $xml = simplexml_load_file($feedurl);
-        // foreach($xml->channel->item as $item)
+
         foreach($xml->channel->item as $item)
         {
             $pub = new Publication($item);
@@ -111,7 +112,8 @@ class Publication
     {
         $output = "<li class='item'>";
         $output .= "<span class='authors'>" . $this->authString() . "</span>";
-        $output .= ". ";
+        // $output .= ". ";
+        $output .= " ";
         // $output .= "<span class='date'>" . $this->date . "</span>";
         $output .= "<span class='date'>" . $this->year() . "</span>";
         $output .= ". ";
@@ -122,14 +124,6 @@ class Publication
         return $output;
     }
 }
-
-$feeds = array(
-	'mad' => 'https://pure.itu.dk/portal/en/organisations/mad-art--design(cf9b4e6a-e1ad-41e3-9475-7679abe7131b)/publications.rss',
-    'rosemary' => 'https://pure.itu.dk/portal/en/organisations/mad-art--design(cf9b4e6a-e1ad-41e3-9475-7679abe7131b)/publications.rss'
-);
-
-$feedurl = $feeds['mad'];
-$xml = simplexml_load_file($feedurl);
 
 add_action('widgets_init', function() {
     register_widget('Pure_Widget');
