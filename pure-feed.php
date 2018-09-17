@@ -55,25 +55,26 @@ class Pure_Widget extends WP_Widget
         $title = !empty($instance['title']) ? $instance['title'] : esc_html__('', 'text_domain');
         $url = !empty($instance['url']) ? $instance['url'] : esc_html__('Give Pure RSS URL', 'text_domain');
         ?>
-        <div>
-        <label for="<?php echo esc_attr($this->get_field_id('title'));?>">
-        <?php esc_attr_e('Title:', 'text_domain');?>
-        </label>
-        <input class="title"
-          id="<?php echo esc_attr($this->get_field_id('title')); ?>"
-          name="<?php echo esc_attr($this->get_field_name('title'));?>"
-          type="text"
-          value="<?php echo esc_attr($title); ?>">
-        <br/>
-        <label for="<?php echo esc_attr($this->get_field_id('url'));?>">
-        <?php esc_attr_e('Url:', 'text_domain');?>
-        </label>
-        <input class="url"
-          id="<?php echo esc_attr($this->get_field_id('url')); ?>"
-          name="<?php echo esc_attr($this->get_field_name('url'));?>"
-          type="text"
-          value="<?php echo esc_attr($url); ?>">
-        </div>
+        <p>
+          <label for="<?php echo esc_attr($this->get_field_id('title'));?>">
+            <?php esc_attr_e('Title:', 'text_domain');?>
+          </label>
+          <input id="<?php echo esc_attr($this->get_field_id('title')); ?>"
+            class="title"
+            name="<?php echo esc_attr($this->get_field_name('title'));?>"
+            type="text"
+            value="<?php echo esc_attr($title); ?>">
+        </p>
+        <p>
+          <label for="<?php echo esc_attr($this->get_field_id('url'));?>">
+            <?php esc_attr_e('Url:', 'text_domain');?>
+          </label>
+          <input id="<?php echo esc_attr($this->get_field_id('url')); ?>"
+            class="url"
+            name="<?php echo esc_attr($this->get_field_name('url'));?>"
+            type="text"
+            value="<?php echo esc_attr($url); ?>">
+          </p>
         <?php
     }
 
