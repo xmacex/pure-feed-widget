@@ -16,14 +16,6 @@ class Pure_Widget extends WP_Widget
             'description' => 'Pure feed widget'
         );
         parent::__construct('pure_widget', 'Pure widget', $widget_ops);
-
-        $feeds = array(
-            'mad' => 'https://pure.itu.dk/portal/en/organisations/mad-art--design(cf9b4e6a-e1ad-41e3-9475-7679abe7131b)/publications.rss',
-            'rosemary' => 'https://pure.itu.dk/portal/en/organisations/mad-art--design(cf9b4e6a-e1ad-41e3-9475-7679abe7131b)/publications.rss'
-        );
-
-        $feedurl = $feeds['mad'];
-        $this->xml = simplexml_load_file($feedurl);
     }
 
     // Widget output
@@ -37,15 +29,14 @@ class Pure_Widget extends WP_Widget
           echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
         }
 
-        $feedurl = $instance['url'];
-        $xml = simplexml_load_file($feedurl);
-        // $xml = $instance['xml'];
-
-        foreach($xml->channel->item as $item)
-        {
-            $pub = new Publication($item);
-            print($pub->toHtml() . PHP_EOL);
-            print(PHP_EOL);
+        if (!empty($instance['url'])) {
+            $xml = simplexml_load_file($instance['url']);
+            foreach($xml->channel->item as $item)
+            {
+                $pub = new Publication($item);
+                print($pub->toHtml() . PHP_EOL);
+                print(PHP_EOL);
+            }
         }
         echo $args['after_widget'];
     }
@@ -55,7 +46,7 @@ class Pure_Widget extends WP_Widget
     public function form($instance)
     {
         $title = !empty($instance['title']) ? $instance['title'] : esc_html__('', 'text_domain');
-        $url = !empty($instance['url']) ? $instance['url'] : esc_html__('Give Pure RSS URL', 'text_domain');
+        $url = !empty($instance['url']) ? $instance['url'] : null;
         ?>
         <p>
           <label for="<?php echo esc_attr($this->get_field_id('title'));?>">
@@ -84,7 +75,7 @@ class Pure_Widget extends WP_Widget
     public function update($new_instance, $old_instance) {
         $instance = array();
         $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : 'Latest publications';
-        $instance['url'] = (!empty($new_instance['url'])) ? strip_tags($new_instance['url']) : 'https://pure.itu.dk/portal/en/organisations/mad-art--design(cf9b4e6a-e1ad-41e3-9475-7679abe7131b)/publications.rss';
+        $instance['url'] = (!empty($new_instance['url'])) ? strip_tags($new_instance['url']) : null;
         return $instance;
     }
 }
