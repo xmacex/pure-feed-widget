@@ -29,12 +29,14 @@ class Pure_Widget extends WP_Widget
 
         if (!empty($instance['url'])) {
             $xml = simplexml_load_file($instance['url']);
+            echo "<ul class='references'>";
             foreach($xml->channel->item as $item)
             {
                 $pub = new Publication($item);
                 print($pub->toHtml() . PHP_EOL);
                 print(PHP_EOL);
             }
+            echo '</ul>';
         }
         echo $args['after_widget'];
     }

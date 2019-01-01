@@ -46,8 +46,8 @@ class Test_Pure_Widget extends WP_UnitTestCase
         ob_start();
         $w->widget($args, $instance);
         $output = ob_get_clean();
-        
-        $this->assertContains("<li class='item'><span class='authors'>", $output);
+
+        $this->assertContains("<div><h2>Latest publications</h2><ul class='references'><li class='item'><span class='authors'>", $output);
     }
 
     function test_with_unretrievable_url_should_complain()
