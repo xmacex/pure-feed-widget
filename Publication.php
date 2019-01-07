@@ -27,7 +27,7 @@ class Publication
 
     private function authString()
     {
-        return implode(", ", $this->authors);
+        return implode("; ", $this->authors);
     }
 
     private function titleHtml($link=true)
@@ -46,19 +46,13 @@ class Publication
         return $output;
     }
 
-    private function year()
-    {
-        return date('Y', $this->date);
-    }
-
     public function toHtml()
     {
         $output = "<li class='item'>";
         $output .= "<span class='authors'>" . $this->authString() . "</span>";
         // $output .= ". ";
         $output .= " ";
-        // $output .= "<span class='date'>" . $this->date . "</span>";
-        $output .= "<span class='date'>" . $this->year() . "</span>";
+        $output .= "<span class='date'>" . $this->date . "</span>";
         $output .= ". ";
         $output .= $this->titleHtml();
         $output .= ". ";
