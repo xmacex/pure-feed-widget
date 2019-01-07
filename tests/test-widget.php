@@ -50,7 +50,7 @@ class Test_Pure_Widget extends WP_UnitTestCase
         $this->assertContains("<div><h2>Latest publications</h2><ul class='references'><li class='item'><span class='authors'>", $output);
     }
 
-    function test_with_unretrievable_url_should_complain()
+    function test_with_unretrievable_url_should_raise_error()
     {
         $w = new Pure_Widget();
         $args = array(
