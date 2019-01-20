@@ -36,9 +36,9 @@ class Pure_Widget extends WP_Widget
             // $xml = simplexml_load_file($instance['url']);
             $this->datasource = new PureWsRest($instance['url']);
             echo "<ul class='references'>";
-            foreach($this->datasource->publications as $item)
+            foreach($this->datasource->publications as $pub)
             {
-                $pub = new Publication($item);
+                // $pub = new Publication($item);
                 print($pub->toHtml() . PHP_EOL);
                 print(PHP_EOL);
             }
