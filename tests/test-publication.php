@@ -32,6 +32,12 @@ class TestPublication extends WP_UnitTestCase
         $this->assertGreaterThan(0, strlen($pub->publication));
     }
 
+    function test_publication_should_infer_host_publication_title()
+    {
+        $wsrest = new PureWsRest(WSRESTFILE);
+        // var_dump($wsrest->publications);
+    }
+
     /**
      * @dataProvider infrastructuring_in_pd_provider
      */
@@ -76,7 +82,7 @@ class TestPublication extends WP_UnitTestCase
     /**
      * Gets live data from IT University of Copenhagen MAD research group
      */
-    function _pure_feed_item_from_itu_mad_provider()
+    function pure_feed_item_from_itu_mad_provider()
     {
         $feed = new PureWsRest("https://pure.itu.dk/ws/rest/publication?associatedOrganisationUuids.uuid=cf9b4e6a-e1ad-41e3-9475-7679abe7131b&window.size=5&associatedOrganisationAggregationStrategy=RecursiveContentValueAggregator");
         $items = [];
