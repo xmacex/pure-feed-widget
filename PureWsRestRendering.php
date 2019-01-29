@@ -13,26 +13,29 @@ class PureWsRestRendering
      * Constructs a data source
      *
      * @param string $path       URL to grab data from
-     * @param SimpleXML $xmldata If given, loads this data insteado
+     * @param SimpleXML $xmldata If given, loads this data instead
+     * @param string $rendering  Rendering style
      */
-    function __construct($path, $xmldata = false)
+    function __construct($path, $xmldata=NULL, $rendering='vancouver')
     {
+        $this->rendering = $rendering;
+        $this->publications = [];
+
         if ($xmldata) {
             $xml = $xmldata;
         } else {
-            $params = ['rendering' => 'vancouver',
+            $params = ['rendering' => $this->rendering,
                        'linkingStrategy' => 'portalLinkingStrategy',
                        'locale' => 'en_GB'];
-
             $url = $path . "&" . http_build_query($params);
-            $this->publications = [];
             $xml = simplexml_load_file($url);
         }
+
         foreach($xml->xpath('//core:result/core:renderedItem') as $item)
         {
             $item->registerXPathNamespace('stabl', 'http://atira.dk/schemas/pure4/model/template/abstractpublication/stable');
             $item->registerXPathNamespace('publication-template', 'http://atira.dk/schemas/pure4/model/template/abstractpublication/stable');
-            $this->publications[] = new RenderedPublication($item);
+            $this->publications[] = new RenderedPublication($item, $this->rendering);
         }
     }
 
