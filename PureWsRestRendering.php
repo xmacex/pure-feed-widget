@@ -21,7 +21,9 @@ class PureWsRestRendering
             $xml = $xmldata;
         } else {
             $params = ['rendering' => 'vancouver',
-                       'linkingStrategy' => 'portalLinkingStrategy'];
+                       'linkingStrategy' => 'portalLinkingStrategy',
+                       'locale' => 'en_GB'];
+
             $url = $path . "&" . http_build_query($params);
             $this->publications = [];
             $xml = simplexml_load_file($url);
