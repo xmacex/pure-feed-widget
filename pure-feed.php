@@ -7,8 +7,7 @@
   Author URI: https://github.com/xmacex
 */
 
-require_once('Publication.php');
-require_once('PureWsRest.php');
+require_once('PureWsRestRendering.php');
 
 class Pure_Widget extends WP_Widget
 {
@@ -34,7 +33,7 @@ class Pure_Widget extends WP_Widget
 
         if (!empty($instance['url'])) {
             // $xml = simplexml_load_file($instance['url']);
-            $this->datasource = new PureWsRest($instance['url']);
+            $this->datasource = new PureWsRestRendering($instance['url']);
             echo "<ul class='references'>";
             foreach($this->datasource->publications as $pub)
             {
