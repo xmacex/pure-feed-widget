@@ -34,11 +34,18 @@ class Pure_Widget extends WP_Widget
 
         if (!empty($instance['url'])) {
             // $xml = simplexml_load_file($instance['url']);
-            $this->datasource = new PureWsRestRendering($instance['url'], $instance['org'], NULL, $noitems=$instance['noitems'], $orderby='publicationDate', $rendering=$instance['rendering'], $orgagg='RecursiveContentValueAggregator');
+            $this->datasource = new PureWsRestRendering(
+                $instance['url'],
+                $instance['org'],
+                NULL,
+                $noitems=$instance['noitems'],
+                $orderby='publicationDate',
+                $rendering=$instance['rendering'],
+                $orgagg='RecursiveContentValueAggregator');
+
             echo "<ul class='references'>";
             foreach($this->datasource->publications as $pub)
             {
-                // $pub = new Publication($item);
                 print($pub->toHtml() . PHP_EOL);
                 print(PHP_EOL);
             }
@@ -53,10 +60,11 @@ class Pure_Widget extends WP_Widget
     {
         $title = !empty($instance['title']) ? $instance['title'] : esc_html__('', 'text_domain');
         $url = !empty($instance['url']) ? $instance['url'] : NULL;
-	$org = !empty($instance['org']) ? $instance['org'] : NULL;
-	$noitems = !empty($instance['noitems']) ? $instance['noitems'] : 5;
+        $org = !empty($instance['org']) ? $instance['org'] : NULL;
+        $noitems = !empty($instance['noitems']) ? $instance['noitems'] : 5;
         $rendering = !empty($instance['rendering']) ? $instance['rendering'] : NULL;
 ?>
+    <!-- Widget title -->
     <p>
         <label for="<?php echo esc_attr($this->get_field_id('title'));?>">
             <?php esc_attr_e('Title:');?>
@@ -67,6 +75,7 @@ class Pure_Widget extends WP_Widget
                type="text"
                value="<?php echo isset($title) ? esc_attr($title) : NULL; ?>">
     </p>
+    <!-- API endpoint URL -->
     <p>
         <label for="<?php echo esc_attr($this->get_field_id('url'));?>">
             <?php esc_attr_e('API URL:');?>
@@ -79,6 +88,7 @@ class Pure_Widget extends WP_Widget
 	       pattern="http.*"
                value="<?php echo isset($url) ? esc_attr($url) : NULL; ?>">
     </p>
+    <!-- Organization UUID -->
     <p>
         <label for="<?php echo esc_attr($this->get_field_id('org'));?>">
             <?php esc_attr_e('Organization UUID:');?>
@@ -90,7 +100,7 @@ class Pure_Widget extends WP_Widget
 	       required
                value="<?php echo isset($org) ? esc_attr($org) : NULL; ?>">
     </p>
-
+    <!-- Number of items to retrieve -->
     <p>
         <label for="<?php echo esc_attr($this->get_field_id('noitems'));?>">
             <?php esc_attr_e('Number of items:');?>
@@ -103,16 +113,21 @@ class Pure_Widget extends WP_Widget
                max="50"
                value="<?php echo isset($noitems) ? esc_attr($noitems) : 5; ?>">
     </p>
-
+    <!-- Rendering style, available style retrieved from endpoint -->
     <p>
         <label for="<?php echo esc_attr($this->get_field_id('rendering'));?>">
             <?php esc_attr_e('Rendering:');?>
         </label>
         <select id="<?php echo esc_attr($this->get_field_id('rendering')); ?>"
-		class="rendering"
-		name="<?php echo esc_attr($this->get_field_name('rendering'));?>">
+		    class="rendering"
+		    name="<?php echo esc_attr($this->get_field_name('rendering'));?>">
+	    <!--This would better be AJAX I guess. -->
 	    <?php
-	    $renderings = simplexml_load_file('https://pure.itu.dk/ws/rest//getAllowedFormatsRequest?type=dk.atira.pure.api.shared.model.researchoutput.ResearchOutput');
+	    $endpoint = 'https://pure.itu.dk/ws/rest/';
+	    $formats_url = $endpoint . "/getAllowedFormatsRequest" . "?" . http_build_query([
+		'type' => 'dk.atira.pure.api.shared.model.researchoutput.ResearchOutput']);
+	    $renderings = simplexml_load_file($formats_url);
+
 	    foreach($renderings->xpath('//core:GetAllowedFormatsResponse/core:format') as $rendering_option) {
 		echo "<option value=$rendering_option " . (($rendering_option == esc_attr($rendering)) ? "selected" : NULL) . ">$rendering_option</option>";
 	    }
@@ -122,16 +137,16 @@ class Pure_Widget extends WP_Widget
 <?php
 }
 
-    // Save options
-    public function update($new_instance, $old_instance) {
-        $instance = array();
-        $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : 'Latest publications';
-        $instance['url'] = (!empty($new_instance['url'])) ? strip_tags($new_instance['url']) : null;
-        $instance['org'] = (!empty($new_instance['org'])) ? strip_tags($new_instance['org']) : null;
-        $instance['noitems'] = (!empty($new_instance['noitems'])) ? strip_tags($new_instance['noitems']) : 5;
-        $instance['rendering'] = (!empty($new_instance['rendering'])) ? strip_tags($new_instance['rendering']) : "vancouver";
-        return $instance;
-    }
+// Save options
+public function update($new_instance, $old_instance) {
+    $instance = array();
+    $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : 'Latest publications';
+    $instance['url'] = (!empty($new_instance['url'])) ? strip_tags($new_instance['url']) : null;
+    $instance['org'] = (!empty($new_instance['org'])) ? strip_tags($new_instance['org']) : null;
+    $instance['noitems'] = (!empty($new_instance['noitems'])) ? strip_tags($new_instance['noitems']) : 5;
+    $instance['rendering'] = (!empty($new_instance['rendering'])) ? strip_tags($new_instance['rendering']) : "vancouver";
+    return $instance;
+}
 }
 
 add_action('widgets_init', function() {
