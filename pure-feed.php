@@ -57,7 +57,7 @@ class Pure_Widget extends WP_Widget
 ?>
     <p>
         <label for="<?php echo esc_attr($this->get_field_id('title'));?>">
-            <?php esc_attr_e('Title:', 'text_domain');?>
+            <?php esc_attr_e('Title:');?>
         </label>
         <input id="<?php echo esc_attr($this->get_field_id('title')); ?>"
                class="title"
@@ -67,7 +67,7 @@ class Pure_Widget extends WP_Widget
     </p>
     <p>
         <label for="<?php echo esc_attr($this->get_field_id('url'));?>">
-            <?php esc_attr_e('Url:', 'text_domain');?>
+            <?php esc_attr_e('Url:');?>
         </label>
         <input id="<?php echo esc_attr($this->get_field_id('url')); ?>"
                class="url"
@@ -77,18 +77,20 @@ class Pure_Widget extends WP_Widget
     </p>
     <p>
         <label for="<?php echo esc_attr($this->get_field_id('noitems'));?>">
-            <?php esc_attr_e('Noitems:', 'text_domain');?>
+            <?php esc_attr_e('Number of items:');?>
         </label>
         <input id="<?php echo esc_attr($this->get_field_id('noitems')); ?>"
                class="noitems"
                name="<?php echo esc_attr($this->get_field_name('noitems'));?>"
-               type="text"
+               type="number"
+               min="1"
+               max="50"
                value="<?php echo isset($noitems) ? esc_attr($noitems) : 5; ?>">
     </p>
 
     <p>
         <label for="<?php echo esc_attr($this->get_field_id('rendering'));?>">
-            <?php esc_attr_e('Rendering:', 'text_domain');?>
+            <?php esc_attr_e('Rendering:');?>
         </label>
         <input id="<?php echo esc_attr($this->get_field_id('rendering')); ?>"
                class="url"
