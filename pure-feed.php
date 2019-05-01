@@ -1,10 +1,11 @@
 <?php
 /**
-   Plugin Name: Pure feed widget
-   Plugin URL: https://github.com/xmacex/pure-widget
-   Description: Render feeds from Elsevier Pure systems
-   Author: Mace Ojala
-   Author URI: https://github.com/xmacex
+ * Plugin Name: Pure feed widget
+ * Plugin URL: https://github.com/xmacex/pure-widget
+ * Description: Render feeds from Elsevier Pure systems
+ * Version: 0.0.1
+ * Author: Mace Ojala
+ * Author URI: https://github.com/xmacex
  */
 
 require_once('PureWsRestRendering.php');

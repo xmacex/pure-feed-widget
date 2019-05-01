@@ -1,8 +1,8 @@
 === Plugin Name ===
 Contributors: xmacex
-Tags: elsevier, pure
+Tags: elsevier, pure, metadata, bibliography, publications, academic,
 Requires at least: 3.0.1
-Tested up to: 4.9.8
+Tested up to: 5.1.1
 Requires PHP: 5.2.4
 Stable tag: 4.3
 License: GPLv3
