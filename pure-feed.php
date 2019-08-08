@@ -61,6 +61,7 @@ class Pure_Widget extends WP_Widget
         $title = !empty($instance['title']) ? $instance['title'] : esc_html__('', 'text_domain');
         $url = !empty($instance['url']) ? $instance['url'] : NULL;
         $org = !empty($instance['org']) ? $instance['org'] : NULL;
+        $apikey = !empty($instance['apikey']) ? $instance['apikey'] : NULL;
         $noitems = !empty($instance['noitems']) ? $instance['noitems'] : 5;
         $rendering = !empty($instance['rendering']) ? $instance['rendering'] : NULL;
 ?>
@@ -88,6 +89,19 @@ class Pure_Widget extends WP_Widget
 	       pattern="http.*"
                value="<?php echo isset($url) ? esc_attr($url) : NULL; ?>">
     </p>
+    <!-- API endpoint key -->
+    <p>
+        <label for="<?php echo esc_attr($this->get_field_id('apikey'));?>">
+            <?php esc_attr_e('API key:');?>
+        </label>
+        <input id="<?php echo esc_attr($this->get_field_id('apikey')); ?>"
+               class="apikey"
+               name="<?php echo esc_attr($this->get_field_name('apikey'));?>"
+               type="text"
+	       required
+               value="<?php echo isset($url) ? esc_attr($apikey) : NULL; ?>">
+    </p>
+
     <!-- Organization UUID -->
     <p>
         <label for="<?php echo esc_attr($this->get_field_id('org'));?>">
@@ -123,13 +137,15 @@ class Pure_Widget extends WP_Widget
 		name="<?php echo esc_attr($this->get_field_name('rendering'));?>">
 	    <!--This would better be AJAX I guess. -->
 	    <?php
-	    $endpoint = 'https://pure.itu.dk/ws/rest/';
-	    $formats_url = $endpoint . "/getAllowedFormatsRequest" . "?" . http_build_query([
-		'type' => 'dk.atira.pure.api.shared.model.researchoutput.ResearchOutput']);
+	    $formats_url = $url . "/research-outputs-meta/renderings?apiKey=" . $apikey;
 	    $renderings = simplexml_load_file($formats_url);
 
-	    foreach($renderings->xpath('//core:GetAllowedFormatsResponse/core:format') as $rendering_option) {
-		echo "<option value=$rendering_option " . (($rendering_option == esc_attr($rendering)) ? "selected" : NULL) . ">$rendering_option</option>";
+	    if($renderings) {
+		foreach($renderings->xpath('//renderings/rendering') as $rendering_option) {
+		    echo "<option value=$rendering_option " . (($rendering_option == esc_attr($rendering)) ? "selected" : NULL) . ">$rendering_option</option>";
+		}
+	    } else {
+		echo "<p>Fetching publications failed</p>";
 	    }
 	    ?>
 	</select>
@@ -142,6 +158,7 @@ class Pure_Widget extends WP_Widget
         $instance = array();
         $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : 'Latest publications';
         $instance['url'] = (!empty($new_instance['url'])) ? strip_tags($new_instance['url']) : null;
+        $instance['apikey'] = (!empty($new_instance['apikey'])) ? strip_tags($new_instance['apikey']) : null;
         $instance['org'] = (!empty($new_instance['org'])) ? strip_tags($new_instance['org']) : null;
         $instance['noitems'] = (!empty($new_instance['noitems'])) ? strip_tags($new_instance['noitems']) : 5;
         $instance['rendering'] = (!empty($new_instance['rendering'])) ? strip_tags($new_instance['rendering']) : "vancouver";
