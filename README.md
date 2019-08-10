@@ -1,4 +1,4 @@
-A widget for displaying feeds from Elsevier Pure in WordPress.
+A widget for listing academic publications from Elsevier Pure in WordPress.
 
 # Description
 
