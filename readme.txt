@@ -19,8 +19,8 @@ Pure offers rendering items in various bibliographical style.
 
 == Screenshots ==
 
-1. [example_output-apa.png Pure offers rendering items in various bibliographical style. Below is example output with the [APA style](https://apastyle.apa.org/) style, without any fancy CSS.]
-2. [example_output-short.png Example output with the *short* style ]
+1. Pure offers rendering items in various bibliographical style. Below is example output with the [APA style](https://apastyle.apa.org/) style, without any fancy CSS.
+2. Example output with the *short* style
 
 == Installation ==
 
