@@ -24,11 +24,21 @@ class Publication
         }
     }
 
+    /**
+     * Render as string.
+     *
+     * @return string String representation.
+     */
     public function __toString()
     {
         return (string)$this->rendered->asXML();
     }
 
+    /**
+     * Render as HTML.
+     *
+     * @return string HTML representation.
+     */
     public function asHtml()
     {
         $output = "<li class='item'>";

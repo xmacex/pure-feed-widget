@@ -91,7 +91,6 @@ class Pure
         // curl_setopt($curl, CURLOPT_POSTFIELDS, $query);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $query->asXML());
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        // var_dump(curl_getinfo($curl));
         $result = curl_exec($curl);
 
         if(curl_errno($curl)) {
