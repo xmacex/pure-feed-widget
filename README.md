@@ -28,14 +28,22 @@ This widget has no opinion about styling. From this example HTML structure, in t
         <ul class="references">
             <li class="item">
                 <div class="rendering rendering_researchoutput  rendering_researchoutput_apa rendering_contributiontoconference rendering_apa rendering_contributiontoconference_apa">
-                    <a rel="Person" href="https://pure.itu.dk/portal/en/persons/anders-sundnes-loevlie(22ec9269-2fff-4dbf-a9c7-5037559a15ee).html" class="link"><span>Løvlie, A. S.</span></a>, Benford, S., Spence, J.<a rel="Person" href="https://pure.itu.dk/portal/en/persons/tim-wray(f90a0487-b539-4132-82a4-4aee76dbfe52).html" class="link"><span>, Wray, T.</span></a><a rel="Person" href="https://pure.itu.dk/portal/en/persons/christian-hviid-mortensen(11d33701-c7dd-437f-a515-fc14c8092775).html" class="link"><span>, Mortensen, C. H.</span></a><a rel="Person" href="https://pure.itu.dk/portal/en/persons/anne-roerbaek-olesen(2f83eb23-3f43-4213-9ea4-78f9ebb11b05).html" class="link"><span>, Olesen, A. R.</span></a>, ... Waern, A. (2019).
-                    <a rel="ContributionToConference" href="https://pure.itu.dk/portal/en/publications/the-gift-framework-give-visitors-the-tools-to-tell-their-own-stories(c9fcf3d7-2076-4c73-ac05-95d98a122e7d).html" class="link"><span><em>The GIFT framework: Give visitors the tools to tell their own stories</em></span></a>. Paper presented at MuseWeb 2019, Boston, United States.
+                    <a rel="Person" href="https://pure.itu.dk/portal/en/persons/anders-sundnes-loevlie(22ec9269-2fff-4dbf-a9c7-5037559a15ee).html" class="link"><span>Løvlie, A. S.</span></a>,
+					Benford, S., Spence, J.
+					<a rel="Person" href="https://pure.itu.dk/portal/en/persons/tim-wray(f90a0487-b539-4132-82a4-4aee76dbfe52).html" class="link"><span>, Wray, T.</span></a>
+					<a rel="Person" href="https://pure.itu.dk/portal/en/persons/christian-hviid-mortensen(11d33701-c7dd-437f-a515-fc14c8092775).html" class="link"><span>, Mortensen, C. H.</span></a>
+					<a rel="Person" href="https://pure.itu.dk/portal/en/persons/anne-roerbaek-olesen(2f83eb23-3f43-4213-9ea4-78f9ebb11b05).html" class="link"><span>, Olesen, A. R.</span></a>,
+					...
+					Waern, A. (2019).
+                    <a rel="ContributionToConference" href="https://pure.itu.dk/portal/en/publications/the-gift-framework-give-visitors-the-tools-to-tell-their-own-stories(c9fcf3d7-2076-4c73-ac05-95d98a122e7d).html" class="link"><span><em>The GIFT framework: Give visitors the tools to tell their own stories</em></span></a>.
+					Paper presented at MuseWeb 2019, Boston, United States.
                 </div>
             </li>
             <li class="item">
                 <div class="rendering rendering_researchoutput  rendering_researchoutput_apa rendering_bookanthology rendering_apa rendering_bookanthology_apa">
                     <a rel="Person" href="https://pure.itu.dk/portal/en/persons/jonas-joergensen(8758dd24-d86a-4dab-be44-fa4e9e903141).html" class="link"><span>Jørgensen, J.</span></a> (2019).
-                    <a rel="BookAnthology" href="https://pure.itu.dk/portal/en/publications/constructing-soft-robot-aesthetics(1f3ae4b4-056c-4a8b-8c02-b9237d51d8a0).html" class="link"><span><em>Constructing Soft Robot Aesthetics</em></span></a>. IT-Universitetet i København.
+                    <a rel="BookAnthology" href="https://pure.itu.dk/portal/en/publications/constructing-soft-robot-aesthetics(1f3ae4b4-056c-4a8b-8c02-b9237d51d8a0).html" class="link"><span><em>Constructing Soft Robot Aesthetics</em></span></a>.
+					IT-Universitetet i København.
                 </div>
             </li>
             .
