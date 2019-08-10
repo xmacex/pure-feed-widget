@@ -60,7 +60,9 @@ class Pure
 
         $query = new SimpleXMLElement('<researchOutputsQuery/>');
         $query->addChild('size', $size);
-        $query->addChild('linkingStrategy', 'portalLinkingStrategy'); // This needs to be before renderings
+        $query->addChild('linkingStrategy', 'portalLinkingStrategy'); // This needs to near the top
+        $query->addChild('locales')->addChild('locale', 'en_GB');
+        $query->addChild('fallbackLocales')->addChild('fallbackLocale', 'en_GB');
         $query->addChild('renderings')->addChild('rendering', $rendering);
         // $query->addChild('orderings')->addChild('ordering', '-publicationYear');
         $query->addChild('orderings')->addChild('ordering', $order);
