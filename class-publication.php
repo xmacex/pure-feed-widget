@@ -42,7 +42,7 @@ class Publication {
 	 *
 	 * @return string HTML representation.
 	 */
-	public function asHtml() {
+	public function as_html() {
 		$output  = "<li class='item'>";
 		$output .= (string) $this->rendered;
 		$output .= '</li>';

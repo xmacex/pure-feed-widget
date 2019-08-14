@@ -48,7 +48,7 @@ class Pure_Widget extends \WP_Widget {
 			echo "<ul class='references'>";
 			$publications = $this->datasource->get_research_outputs( $org = $instance['org'], $size = $instance['size'], $rendering = $instance['rendering'] );
 			foreach ( $publications as $pub ) {
-				print( $pub->asHtml() );
+				print( $pub->as_html() );
 				print( PHP_EOL );
 			}
 			echo '</ul>';
