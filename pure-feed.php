@@ -31,9 +31,11 @@ class Pure_Widget extends WP_Widget
     {
         echo $args['before_widget'];
         echo $args['before_title'];
-        $title = !empty($instance['title']) ? $instance['title'] : esc_html__('Latest publications', 'text_domain');
-        echo $title;
-        echo $args['after_title'];
+
+        if (!empty( $instance['title']))
+        {
+          echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
+        }
 
         $feedurl = $instance['url'];
         $xml = simplexml_load_file($feedurl);
