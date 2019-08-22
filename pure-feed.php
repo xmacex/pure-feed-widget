@@ -1,5 +1,5 @@
 <?php
-/*
+/**
   Plugin Name: Pure feed widget
   Plugin URL: https://github.com/xmacex/pure-widget
   Description: Render feeds from Elsevier Pure systems
@@ -22,12 +22,10 @@ class Pure_Widget extends WP_Widget
     public function widget($args, $instance)
     {
         echo $args['before_widget'];
-        echo $args['before_title'];
 
-        if (!empty( $instance['title']))
-        {
-          echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
-        }
+        echo $args['before_title'];
+        echo apply_filters('widget_title', !empty($instance['title']) ? $instance['title'] : "Latest publications");
+        echo $args['after_title'];
 
         if (!empty($instance['url'])) {
             $xml = simplexml_load_file($instance['url']);
