@@ -89,6 +89,7 @@ class Publication
     public $authors = [];
     public $date;
     public $title;
+    public $link;
     public $publication;
 
     public function __construct($elem)
@@ -103,6 +104,7 @@ class Publication
             }
         }
         $this->title = (string)$elem->title;
+        $this->link = $elem->link;
         $this->publication = (string)$desc->div[1]->div[1]->table->tbody->tr[1]->td;
         // $this->date = (string)$desc->div[0]->span[0];
         $this->date = strtotime($desc->div[0]->span[0]);
@@ -116,6 +118,22 @@ class Publication
     private function authString()
     {
         return implode(", ", $this->authors);
+    }
+
+    private function titleHtml($link=true)
+    {
+        $output = "<span class='title'>";
+        if ($link)
+        {
+            $output .= "<a href='" . $this->link . "'>" . $this->title . "</a>";
+        }
+        else
+        {
+            $output .= $this->title;
+        }
+        $output .= "</span>";
+
+        return $output;
     }
 
     private function year()
@@ -132,7 +150,7 @@ class Publication
         // $output .= "<span class='date'>" . $this->date . "</span>";
         $output .= "<span class='date'>" . $this->year() . "</span>";
         $output .= ". ";
-        $output .= "<span class='title'>" . $this->title . "</span>";
+        $output .= $this->titleHtml();
         $output .= ". ";
         $output .= "<span class='publication'>" . $this->publication . "</span>";
         $output .= "</li>";
