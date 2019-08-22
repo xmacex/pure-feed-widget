@@ -35,7 +35,7 @@ This widget has no opinion about styling. From this example HTML structure, in t
                     <a rel="Person" href="https://pure.itu.dk/portal/en/persons/anne-roerbaek-olesen(2f83eb23-3f43-4213-9ea4-78f9ebb11b05).html" class="link"><span>, Olesen, A. R.</span></a>,
                     ...
                     Waern, A.
-					(2019).
+                    (2019).
                     <a rel="ContributionToConference" href="https://pure.itu.dk/portal/en/publications/the-gift-framework-give-visitors-the-tools-to-tell-their-own-stories(c9fcf3d7-2076-4c73-ac05-95d98a122e7d).html" class="link"><span><em>The GIFT framework: Give visitors the tools to tell their own stories</em></span></a>.
                     Paper presented at MuseWeb 2019, Boston, United States.
                 </div>
