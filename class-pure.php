@@ -43,20 +43,6 @@ class Pure {
 
 		$research_outputs = [];
 
-		$query = new SimpleXMLElement( '<researchOutputsQuery/>' );
-		$query->addChild( 'size', $size );
-		$query->addChild( 'linkingStrategy', 'portalLinkingStrategy' ); // This needs to near the top.
-		$query->addChild( 'locales' )->addChild( 'locale', 'en_GB' );
-		$query->addChild( 'fallbackLocales' )->addChild( 'fallbackLocale', 'en_GB' );
-		$query->addChild( 'renderings' )->addChild( 'rendering', $rendering );
-		// $query->addChild( 'orderings')->addChild('ordering', '-publicationYear');
-		$query->addChild( 'orderings' )->addChild( 'ordering', $order );
-		$query->addChild( 'publicationStatuses' )->addChild( 'publicationStatus', '/dk/atira/pure/researchoutput/status/published' );
-		$query->addChild( 'forOrganisationalUnits' )->addChild( 'uuids' )->addChild( 'uuid', $org );
-
-		// Parameters in an array would be more native than making XML
-		// things. A function could turn an array to XML for
-		// wp_remote_post to send
 		$params = [
 			'size'                   => $size,
 			'linkingStrategy'        => 'portalLinkingStrategy',
@@ -67,6 +53,11 @@ class Pure {
 			'forOrganisationalUnits' => [ 'uuids' => [ 'uuid' => $org ] ],
 		];
 
+		// This is the wrong place for this; would be nice if the XML
+		// conversion was done from the query function, but these
+		// higher level operations need to provide the top level XML
+		// root element for each endpoint. Maybe refactor queries as a
+		// hierarchy of classes? Or modify the function.
 		$query = new SimpleXMLElement( '<researchOutputsQuery/>' );
 		$this->array_to_xml( $query, $params );
 
@@ -101,8 +92,8 @@ class Pure {
 	/**
 	 * Populates and XML element with an array, in place.
 	 *
-	 * @param SimpleXML $object XML object to populate.
-	 * @param array     $data   Data to push to the XML object.
+	 * @param SimpleXMLElement $object XML object to populate.
+	 * @param array            $data   Data to push to the XML object.
 	 *
 	 * @author Francis Lewis
 	 *
@@ -115,7 +106,7 @@ class Pure {
 				$this->array_to_xml( $new_object, $value );
 			} else {
 				// if the key is an integer, it needs text with it to actually work.
-				if ( $key == (int) $key ) {
+				if ( $key === (int) $key ) {
 					$key = "$key";
 				}
 
