@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Pure feed widget
- * Plugin URL: https://github.com/xmacex/pure-widget
+ * Plugin URL: https://github.com/xmacex/pure-feed-widget
  * Description: Render content from Elsevier Pure systems.
  * Version: 0.1.2
  * Author: Mace Ojala
