@@ -10,10 +10,8 @@ class TestPublication extends WP_UnitTestCase
     /**
      * @dataProvider pure_wsrest_item_provider
      */
-    function test_publication_should_parse_types_when_given_pure_item($elem)
+    function test_publication_should_parse_types_when_given_pure_item($pub)
     {
-        $pub = new Publication($elem);
-
         $this->assertInstanceOf(Publication::class, $pub);
         $this->assertInternalType('array', $pub->authors);
         $this->assertInternalType('integer', $pub->date);
@@ -25,10 +23,8 @@ class TestPublication extends WP_UnitTestCase
     /**
      * @dataProvider pure_wsrest_item_provider
      */
-    function test_publication_should_parse_content_when_given_pure_item($elem)
+    function test_publication_should_parse_content_when_given_pure_item($pub)
     {
-        $pub = new Publication($elem);
-
         $this->assertGreaterThan(0, $pub->authors);
         $this->assertGreaterThan(0, $pub->date);
         $this->assertGreaterThan(0, strlen($pub->title));
@@ -39,9 +35,10 @@ class TestPublication extends WP_UnitTestCase
     /**
      * @dataProvider infrastructuring_in_pd_provider
      */
-    function _test_a_single_publication_should_have_fields_defined($elem)
+    function _test_a_single_publication_should_have_fields_defined($pub)
     {
-        $iipwdillwdillt = new Publication($elem);
+        # $iipwdillwdillt = new Publication($elem);
+        $iipwdillwdillt = $pub;
 
         $this->assertInternalType('string', $iipwdillwdillt->title);
         $this->assertEquals("Infrastructuring in PD: What Does Infrastructuring Look Like? When Does It Look Like That?", $iipwdillwdillt->title);
