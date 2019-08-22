@@ -11,16 +11,16 @@
  *
  * See here though for merging this WordPress docblock with phpdoc docblock https://developer.wordpress.org/plugins/plugin-basics/header-requirements/
  *
- * @package PureFeed
+ * @package PureFeedWidget
  */
 
-namespace PureFeed;
+namespace PureFeedWidget;
 
 require_once 'class-pure-widget.php';
 
 add_action(
 	'widgets_init',
 	function() {
-		register_widget( 'PureFeed\Pure_Widget' );
+		register_widget( 'PureFeedWidget\Pure_Widget' );
 	}
 );
