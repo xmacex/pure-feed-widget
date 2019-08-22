@@ -1,4 +1,5 @@
-=== Plugin Name ===
+=== Pure Feed ===
+
 Contributors: xmacex
 Tags: elsevier, pure, metadata, bibliography, publications, academic,
 Requires at least: 3.0.1
@@ -15,6 +16,11 @@ A widget for displaying feeds of academic publications from Elsevier Pure system
 This widget displays publications from [Elsevier Pure](https://www.elsevier.com/solutions/pure) institutional repositories. Compared to the RSS feeds, this hopes to provide a cleaner and more configurable output of publications.
 
 Pure offers rendering items in various bibliographical style.
+
+== Screenshots ==
+
+1. [example_output-apa.png Pure offers rendering items in various bibliographical style. Below is example output with the [APA style](https://apastyle.apa.org/) style, without any fancy CSS.]
+2. [example_output-short.png Example output with the *short* style ]
 
 == Installation ==
 
