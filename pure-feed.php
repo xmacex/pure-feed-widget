@@ -1,11 +1,11 @@
 <?php
 /**
-  Plugin Name: Pure feed widget
-  Plugin URL: https://github.com/xmacex/pure-widget
-  Description: Render feeds from Elsevier Pure systems
-  Author: Mace Ojala
-  Author URI: https://github.com/xmacex
-*/
+   Plugin Name: Pure feed widget
+   Plugin URL: https://github.com/xmacex/pure-widget
+   Description: Render feeds from Elsevier Pure systems
+   Author: Mace Ojala
+   Author URI: https://github.com/xmacex
+ */
 
 require_once('PureWsRestRendering.php');
 
@@ -33,7 +33,7 @@ class Pure_Widget extends WP_Widget
 
         if (!empty($instance['url'])) {
             // $xml = simplexml_load_file($instance['url']);
-            $this->datasource = new PureWsRestRendering($instance['url'], NULL, $rendering='vancouver');
+	    $this->datasource = new PureWsRestRendering($instance['url'], NULL, $rendering=$instance['rendering']);
             echo "<ul class='references'>";
             foreach($this->datasource->publications as $pub)
             {
@@ -51,38 +51,50 @@ class Pure_Widget extends WP_Widget
     public function form($instance)
     {
         $title = !empty($instance['title']) ? $instance['title'] : esc_html__('', 'text_domain');
-        $url = !empty($instance['url']) ? $instance['url'] : null;
-        ?>
-        <p>
-          <label for="<?php echo esc_attr($this->get_field_id('title'));?>">
+        $url = !empty($instance['url']) ? $instance['url'] : NULL;
+	$rendering = !empty($instance['rendering']) ? $instance['rendering'] : NULL;
+?>
+    <p>
+        <label for="<?php echo esc_attr($this->get_field_id('title'));?>">
             <?php esc_attr_e('Title:', 'text_domain');?>
-          </label>
-          <input id="<?php echo esc_attr($this->get_field_id('title')); ?>"
-            class="title"
-            name="<?php echo esc_attr($this->get_field_name('title'));?>"
-            type="text"
-            value="<?php echo esc_attr($title); ?>">
-        </p>
-        <p>
-          <label for="<?php echo esc_attr($this->get_field_id('url'));?>">
+        </label>
+        <input id="<?php echo esc_attr($this->get_field_id('title')); ?>"
+               class="title"
+               name="<?php echo esc_attr($this->get_field_name('title'));?>"
+               type="text"
+               value="<?php echo isset($title) ? esc_attr($title) : NULL; ?>">
+    </p>
+    <p>
+        <label for="<?php echo esc_attr($this->get_field_id('url'));?>">
             <?php esc_attr_e('Url:', 'text_domain');?>
-          </label>
-          <input id="<?php echo esc_attr($this->get_field_id('url')); ?>"
-            class="url"
-            name="<?php echo esc_attr($this->get_field_name('url'));?>"
-            type="text"
-            value="<?php echo esc_attr($url); ?>">
-          </p>
-        <?php
-    }
+        </label>
+        <input id="<?php echo esc_attr($this->get_field_id('url')); ?>"
+               class="url"
+               name="<?php echo esc_attr($this->get_field_name('url'));?>"
+               type="text"
+               value="<?php echo isset($url) ? esc_attr($url) : NULL; ?>">
+    </p>
+    <p>
+        <label for="<?php echo esc_attr($this->get_field_id('rendering'));?>">
+            <?php esc_attr_e('Rendering:', 'text_domain');?>
+        </label>
+        <input id="<?php echo esc_attr($this->get_field_id('rendering')); ?>"
+               class="url"
+               name="<?php echo esc_attr($this->get_field_name('rendering'));?>"
+               type="text"
+               value="<?php echo isset($rendering) ? esc_attr($rendering) : NULL; ?>">
+    </p>
+<?php
+}
 
-    // Save options
-    public function update($new_instance, $old_instance) {
-        $instance = array();
-        $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : 'Latest publications';
-        $instance['url'] = (!empty($new_instance['url'])) ? strip_tags($new_instance['url']) : null;
-        return $instance;
-    }
+// Save options
+public function update($new_instance, $old_instance) {
+    $instance = array();
+    $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : 'Latest publications';
+    $instance['url'] = (!empty($new_instance['url'])) ? strip_tags($new_instance['url']) : null;
+    $instance['rendering'] = (!empty($new_instance['rendering'])) ? strip_tags($new_instance['rendering']) : "vancouver";
+    return $instance;
+}
 }
 
 add_action('widgets_init', function() {
