@@ -119,8 +119,8 @@ class Pure_Widget extends WP_Widget
             <?php esc_attr_e('Rendering:');?>
         </label>
         <select id="<?php echo esc_attr($this->get_field_id('rendering')); ?>"
-		    class="rendering"
-		    name="<?php echo esc_attr($this->get_field_name('rendering'));?>">
+		class="rendering"
+		name="<?php echo esc_attr($this->get_field_name('rendering'));?>">
 	    <!--This would better be AJAX I guess. -->
 	    <?php
 	    $endpoint = 'https://pure.itu.dk/ws/rest/';
@@ -138,15 +138,15 @@ class Pure_Widget extends WP_Widget
 }
 
 // Save options
-public function update($new_instance, $old_instance) {
-    $instance = array();
-    $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : 'Latest publications';
-    $instance['url'] = (!empty($new_instance['url'])) ? strip_tags($new_instance['url']) : null;
-    $instance['org'] = (!empty($new_instance['org'])) ? strip_tags($new_instance['org']) : null;
-    $instance['noitems'] = (!empty($new_instance['noitems'])) ? strip_tags($new_instance['noitems']) : 5;
-    $instance['rendering'] = (!empty($new_instance['rendering'])) ? strip_tags($new_instance['rendering']) : "vancouver";
-    return $instance;
-}
+    public function update($new_instance, $old_instance) {
+        $instance = array();
+        $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : 'Latest publications';
+        $instance['url'] = (!empty($new_instance['url'])) ? strip_tags($new_instance['url']) : null;
+        $instance['org'] = (!empty($new_instance['org'])) ? strip_tags($new_instance['org']) : null;
+        $instance['noitems'] = (!empty($new_instance['noitems'])) ? strip_tags($new_instance['noitems']) : 5;
+        $instance['rendering'] = (!empty($new_instance['rendering'])) ? strip_tags($new_instance['rendering']) : "vancouver";
+        return $instance;
+    }
 }
 
 add_action('widgets_init', function() {
