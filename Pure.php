@@ -65,7 +65,7 @@ class Pure
         // $query->addChild('orderings')->addChild('ordering', '-publicationYear');
         $query->addChild('orderings')->addChild('ordering', $order);
         $query->addChild('publicationStatuses')->addChild('publicationStatus', '/dk/atira/pure/researchoutput/status/published');
-        $query->addChild('forOrganisationalUnits')->addChild('uuids')->addChild('uuid', 'ca087d09-fd99-4c42-8180-9799383c072e');
+        $query->addChild('forOrganisationalUnits')->addChild('uuids')->addChild('uuid', $org);
 
         $xml = $this->query($endpoint, $query);
 
