@@ -70,3 +70,20 @@ ie the most interesting, widget-specific CSS ids and classes are
 The primary intented use scenario is to list newest publications in a widget on a webpage of a research group or lab or other organizational unit. Developed primarily for the [MAD Art and Design research group](https://pure.itu.dk/portal/en/organisations/mad-art--design(cf9b4e6a-e1ad-41e3-9475-7679abe7131b).html) at [IT University of Copenhagen](https://www.itu.dk).
 
 Please create issues and pull requests on GitHub, or if you are at ITU, come have a chat :)
+
+# Development
+
+Just some notes for myself at this point because this is being developed on GitHub and WordPress Plugins is hosted via Subversion. Props to [Deeper Scenery's *WordPress Plugin Development with Git/GitHub*](https://jeremypry.com/wordpress-plugin-development-with-github/).
+
+The usual `git add`, `git commit`, `git push` routine for development. Tags can be used as normal. Then for public releases, bump the *Version* field at the top of `pure-feed-widget.php`, then tag with
+
+```
+git tag v0.1.3 -a -m "Release name or something here."
+```
+
+then 
+
+```
+git svn tag v0.1.3
+git svn dcommit
+```
