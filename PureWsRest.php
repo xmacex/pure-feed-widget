@@ -12,7 +12,7 @@ class PureWsRest
         {
             $item->registerXPathNamespace('stabl', 'http://atira.dk/schemas/pure4/model/template/abstractpublication/stable');
             $item->registerXPathNamespace('person-template', 'http://atira.dk/schemas/pure4/model/template/abstractperson/stable');
-            $this->publications[] = $item;
+            $this->publications[] = new Publication($item);
         }
     }
 
