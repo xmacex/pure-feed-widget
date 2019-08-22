@@ -149,7 +149,7 @@ class Pure_Widget extends \WP_Widget {
 
 		if ( $renderings ) {
 			foreach ( $renderings->xpath( '//renderings/rendering' ) as $rendering_option ) {
-				echo '<option value=$rendering_option ' . ( ( $rendering_option == esc_attr( $rendering ) ) ? 'selected' : null ) . '>$rendering_option</option>';
+				echo '<option value=' . $rendering_option . ( ( $rendering_option == esc_attr( $rendering ) ) ? 'selected' : null ) . '>' . $rendering_option . '</option>';
 			}
 		} else {
 			echo '<p>Fetching styles failed</p>';
