@@ -16,9 +16,10 @@ class PureWsRestRendering
      * @param SimpleXML $xmldata If given, loads this data instead
      * @param string $rendering  Rendering style
      */
-    function __construct($path, $xmldata=NULL, $noitems=5, $rendering='vancouver')
+    function __construct($path, $xmldata=NULL, $noitems=5, $orderby='publicationDate', $rendering='vancouver')
     {
         $this->noitems = $noitems;
+        $this->orderby = $orderby;
         $this->rendering = $rendering;
         $this->publications = [];
 
@@ -26,6 +27,7 @@ class PureWsRestRendering
             $xml = $xmldata;
         } else {
             $params = ['window.size' => $this->noitems,
+                       'orderBy.property' => $this->orderby,
                        'rendering' => $this->rendering,
                        'linkingStrategy' => 'portalLinkingStrategy',
                        'locale' => 'en_GB'];
