@@ -30,6 +30,10 @@ class Pure_Widget extends WP_Widget
     public function widget($args, $instance)
     {
         echo $args['before_widget'];
+        echo $args['before_title'];
+        $title = !empty($instance->title) ? $instace->url : esc_html__('Latest publications', 'text_domain');
+        echo $title;
+        echo $args['after_title'];
 
         $feedurl = $instance['url'];
         $xml = simplexml_load_file($feedurl);
@@ -46,9 +50,19 @@ class Pure_Widget extends WP_Widget
     // Options form
     // Oh dear this is a mess for now
     public function form($instance) {
+        $title = !empty($instance->title) ? $instance->title : esc_html__('', 'text_domain');
         $url = !empty($instance->url) ? $instance->url : esc_html__('Give Pure RSS URL', 'text_domain');
         ?>
         <div>
+        <label for="<?php echo esc_attr($this->get_field_id('title'));?>">
+        <?php esc_attr_e('Title:', 'text_domain');?>
+        </label>
+        <input class="title"
+          id="<?php echo esc_attr($this->get_field_id('title')); ?>"
+          name="<?php echo esc_attr($this->get_field_name('title'));?>"
+          type="text"
+          value="<?php echo esc_attr($title); ?>">
+        <br/>
         <label for="<?php echo esc_attr($this->get_field_id('url'));?>">
         <?php esc_attr_e('Url:', 'text_domain');?>
         </label>
@@ -64,7 +78,8 @@ class Pure_Widget extends WP_Widget
     // Save options
     public function update($new_instance, $old_instance) {
         $instance = array();
-        $instance['url'] = (!empty($new_instance['url'])) ? strip_tags($new_instance['url']) : 'http://somedefaulturl';
+        $instance['title'] = (!empty($new_instance['url'])) ? strip_tags($new_instance['title']) : 'Latest publications';
+        $instance['url'] = (!empty($new_instance['url'])) ? strip_tags($new_instance['url']) : 'https://pure.itu.dk/portal/en/organisations/mad-art--design(cf9b4e6a-e1ad-41e3-9475-7679abe7131b)/publications.rss';
         return $instance;
     }
 }
