@@ -10,6 +10,8 @@ namespace PureFeed;
 require_once 'class-publication.php';
 
 use SimpleXMLElement;
+use function wp_remote_post;
+use function wp_remote_retrieve_body;
 
 /**
  * A Pure API representation.
@@ -41,27 +43,6 @@ class Pure {
 
 		$research_outputs = [];
 
-		// Parameters in an array would be more native than making XML things.
-
-		/*
-		$params = [
-			'size' => $size,
-			'order' => $order,
-			'rendering' => $rendering,
-			// 'associatedOrganizationAggregationStrategy' => $qparam->orgagg,
-			'linkingStrategy' => 'portalLinkingStrategy',
-			'publicationStatus' => '/dk/atira/pure/researchoutput/status/published',
-			'locale' => 'en_GB',
-			'apiKey' => $this->apikey
-		];
-		*/
-
-		/*
-		// Using HTTP GET
-		$url = $endpoint . "/organisational-units/" . $this->org . "/research-outputs" . "?" . http_build_query($params);
-		$xml = simplexml_load_file($url);
-		*/
-
 		$query = new SimpleXMLElement( '<researchOutputsQuery/>' );
 		$query->addChild( 'size', $size );
 		$query->addChild( 'linkingStrategy', 'portalLinkingStrategy' ); // This needs to near the top.
@@ -72,6 +53,21 @@ class Pure {
 		$query->addChild( 'orderings' )->addChild( 'ordering', $order );
 		$query->addChild( 'publicationStatuses' )->addChild( 'publicationStatus', '/dk/atira/pure/researchoutput/status/published' );
 		$query->addChild( 'forOrganisationalUnits' )->addChild( 'uuids' )->addChild( 'uuid', $org );
+
+		/*
+		// Parameters in an array would be more native than making XML things. A function could turn an array to XML for wp_remote_post to send
+		$query = [
+			'researchOutputsQuery' => [
+				'size'                   => $size,
+				'linkingStrategy'        => 'portalLinkingstrategy',
+				'locales'                => [ 'locale' => 'en_GB' ],
+				'renderings'             => [ 'rendering' => $rendering ],
+				'orderings'              => [ 'ordering' => $order ],
+				'publicationStatuses'    => [ 'publicationStatus' => '/dk/atira/pure/researchoutput/status/published' ],
+				'forOrganisationalunits' => [ 'uuids' => [ 'uuid' => $org ] ],
+			],
+		];
+		*/
 
 		$xml = $this->query( $endpoint, $query );
 
@@ -87,22 +83,17 @@ class Pure {
 	 * @param string           $endpoint  API endpoint, ie resource type.
 	 * @param SimpleXMLElement $query     Query parameters as an SimpleXMLElement.
 	 * @return string          $xml       Representation of the response.
-	 * @throws Exception                   Stuff went wrong.
 	 */
 	private function query( string $endpoint, SimpleXMLElement $query ) {
-		$curl = curl_init( $this->url . '/' . $endpoint . '?' . http_build_query( [ 'apiKey' => $this->apikey ] ) );
-		curl_setopt( $curl, CURLOPT_HTTPHEADER, array( 'Content-Type: application/xml' ) );
-		curl_setopt( $curl, CURLOPT_POST, true );
-		curl_setopt( $curl, CURLOPT_POSTFIELDS, $query->asXML() );
-		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
-		$result = curl_exec( $curl );
+		$url  = $this->url . '/' . $endpoint . '?' . http_build_query( [ 'apiKey' => $this->apikey ] );
+		$args = [
+			'body'    => $query->asXML(),
+			'headers' => [ 'Content-Type' => 'application/xml' ],
+		];
 
-		if ( curl_errno( $curl ) ) {
-			throw new Exception( curl_error( $curl ) );
-		}
-		curl_close( $curl );
+		$response = wp_remote_post( $url, $args );
 
-		$xml = simplexml_load_string( $result );
+		$xml = simplexml_load_string( wp_remote_retrieve_body( $response ) );
 		return $xml;
 	}
 }
