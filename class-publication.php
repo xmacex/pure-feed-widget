@@ -2,10 +2,10 @@
 /**
  * A publication
  *
- * @package PureFeed;
+ * @package PureFeedWidget;
  */
 
-namespace PureFeed;
+namespace PureFeedWidget;
 
 class Publication {
 	/**
