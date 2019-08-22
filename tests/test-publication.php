@@ -4,6 +4,7 @@
  */
 
 require_once('PureWsRest.php');
+require_once('Publication.php');
 
 class TestPublication extends WP_UnitTestCase
 {
