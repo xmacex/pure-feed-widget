@@ -2,10 +2,10 @@
 /**
  * WordPress widget for fetching research publications from Pure.
  *
- * @package PureFeed
+ * @package PureFeedWidget
  */
 
-namespace PureFeed;
+namespace PureFeedWidget;
 
 require_once 'class-pure.php';
 

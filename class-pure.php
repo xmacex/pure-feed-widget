@@ -2,10 +2,10 @@
 /**
  * An abstraction over Pure, to simulate the data source
  *
- * @package PureFeed;
+ * @package PureFeedWidget;
  */
 
-namespace PureFeed;
+namespace PureFeedWidget;
 
 require_once 'class-publication.php';
 
