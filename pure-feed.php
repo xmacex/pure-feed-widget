@@ -8,6 +8,7 @@
 */
 
 require_once('Publication.php');
+require_once('PureWsRest.php');
 
 class Pure_Widget extends WP_Widget
 {
@@ -18,6 +19,8 @@ class Pure_Widget extends WP_Widget
             'description' => 'Pure feed widget'
         );
         parent::__construct('pure_widget', 'Pure widget', $widget_ops);
+
+        $this->datasource = NULL;
     }
 
     // Widget output
@@ -30,9 +33,10 @@ class Pure_Widget extends WP_Widget
         echo $args['after_title'];
 
         if (!empty($instance['url'])) {
-            $xml = simplexml_load_file($instance['url']);
+            // $xml = simplexml_load_file($instance['url']);
+            $this->datasource = new PureWsRest($instance['url']);
             echo "<ul class='references'>";
-            foreach($xml->channel->item as $item)
+            foreach($this->datasource->publications as $item)
             {
                 $pub = new Publication($item);
                 print($pub->toHtml() . PHP_EOL);

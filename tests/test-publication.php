@@ -3,11 +3,7 @@
  * @package Pure_Feed
  */
 
-require_once('tests/PureWsRest.php');
-
-// const FEEDFILE = "tests/feed.rss";
-// const FEEDFILE = "tests/publications.rss";
-const DATASRC = "tests/publications-via-wsrest.xml";
+require_once('PureWsRest.php');
 
 class TestPublication extends WP_UnitTestCase
 {
@@ -64,7 +60,7 @@ class TestPublication extends WP_UnitTestCase
 
     function pure_wsrest_item_provider()
     {
-        $feed = new PureWsRest(DATASRC);
+        $feed = new PureWsRest(WSRESTFILE);
         $items = [];
         foreach($feed->publications as $pub)
         {
@@ -76,7 +72,7 @@ class TestPublication extends WP_UnitTestCase
 
     function infrastructuring_in_pd_provider()
     {
-        $feed = new PureWsRest(DATASRC);
+        $feed = new PureWsRest(WSRESTFILE);
         return $feed->get_by_title("Infrastructuring in PD: What Does Infrastructuring Look Like? When Does It Look Like That?");
     }
 

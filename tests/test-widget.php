@@ -2,7 +2,6 @@
 /**
  * @package Pure_Feed
  */
-// require_once 'pure-feed.php';
 
 class Test_Pure_Widget extends WP_UnitTestCase
 {
@@ -41,7 +40,7 @@ class Test_Pure_Widget extends WP_UnitTestCase
             'after_title' => '</h2>'
         );
         $instance = get_option($w->option_name)['_multiwidget'][0];
-        $instance['url'] = 'https://pure.itu.dk/portal/en/organisations/mad-art--design(cf9b4e6a-e1ad-41e3-9475-7679abe7131b)/publications.rss';
+        $instance['url'] = 'https://pure.itu.dk/ws/rest/publication?associatedOrganisationUuids.uuid=cf9b4e6a-e1ad-41e3-9475-7679abe7131b&window.size=5&associatedOrganisationAggregationStrategy=RecursiveContentValueAggregator';
 
         ob_start();
         $w->widget($args, $instance);
