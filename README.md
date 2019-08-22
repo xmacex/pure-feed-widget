@@ -1,7 +1,7 @@
 
 A widget for displaying feeds from Elsevier Pure in WordPress.
 
-# Description ==
+# Description
 
 This widget offers a cleaned experience for [Elsevier Pure](https://www.elsevier.com/solutions/pure) feeds. Developed primarily for the [MAD Art and Design research group](https://pure.itu.dk/portal/en/organisations/mad-art--design(cf9b4e6a-e1ad-41e3-9475-7679abe7131b).html) at [IT University of Copenhagen](https://www.itu.dk).
 
@@ -31,6 +31,8 @@ Pure provides feeds which look like this
 The problem is that the `/rss/channel/item/description` nodes are rendered HTML, a tag soup 🍜
 
 This WordPress plugin parses parts of it, builds a simple object model, and exposes it as an admittedly rudimentary WordPress widget.
+
+![Example output from Pure](example_pure_output.png)
 
 # Installation
 
