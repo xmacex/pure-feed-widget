@@ -1,9 +1,15 @@
 <?php
 /**
  * An abstraction over Pure, to simulate the data source
+ *
+ * @package PureFeed;
  */
 
-require_once 'Publication.php';
+namespace PureFeed;
+
+require_once 'class-publication.php';
+
+use SimpleXMLElement;
 
 /**
  * A Pure API representation.
@@ -81,7 +87,7 @@ class Pure {
 	 * @param string           $endpoint  API endpoint, ie resource type.
 	 * @param SimpleXMLElement $query     Query parameters as an SimpleXMLElement.
 	 * @return string          $xml       Representation of the response.
-	 * @throws Exception                  Stuff went wrong.
+	 * @throws Exception                   Stuff went wrong.
 	 */
 	private function query( string $endpoint, SimpleXMLElement $query ) {
 		$curl = curl_init( $this->url . '/' . $endpoint . '?' . http_build_query( [ 'apiKey' => $this->apikey ] ) );
