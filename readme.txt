@@ -1,4 +1,4 @@
-=== Pure Feed ===
+=== Pure Feed Widget ===
 
 Contributors: xmacex
 Tags: elsevier, pure, metadata, bibliography, publications, academic,
