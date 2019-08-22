@@ -33,7 +33,7 @@ class Pure_Widget extends WP_Widget
 
         if (!empty($instance['url'])) {
             // $xml = simplexml_load_file($instance['url']);
-            $this->datasource = new PureWsRestRendering($instance['url'], NULL, $noitems=$instance['noitems'], $orderby='publicationDate', $rendering=$instance['rendering']);
+            $this->datasource = new PureWsRestRendering($instance['url'], $instance['org'], NULL, $noitems=$instance['noitems'], $orderby='publicationDate', $rendering=$instance['rendering'], $orgagg='RecursiveContentValueAggregator');
             echo "<ul class='references'>";
             foreach($this->datasource->publications as $pub)
             {
@@ -67,14 +67,28 @@ class Pure_Widget extends WP_Widget
     </p>
     <p>
         <label for="<?php echo esc_attr($this->get_field_id('url'));?>">
-            <?php esc_attr_e('Url:');?>
+            <?php esc_attr_e('API URL:');?>
         </label>
         <input id="<?php echo esc_attr($this->get_field_id('url')); ?>"
                class="url"
                name="<?php echo esc_attr($this->get_field_name('url'));?>"
                type="text"
+	       required
+	       pattern="http.*"
                value="<?php echo isset($url) ? esc_attr($url) : NULL; ?>">
     </p>
+    <p>
+        <label for="<?php echo esc_attr($this->get_field_id('org'));?>">
+            <?php esc_attr_e('Organization UUID:');?>
+        </label>
+        <input id="<?php echo esc_attr($this->get_field_id('org')); ?>"
+               class="org"
+               name="<?php echo esc_attr($this->get_field_name('org'));?>"
+               type="text"
+	       required
+               value="<?php echo isset($org) ? esc_attr($org) : NULL; ?>">
+    </p>
+
     <p>
         <label for="<?php echo esc_attr($this->get_field_id('noitems'));?>">
             <?php esc_attr_e('Number of items:');?>
@@ -106,6 +120,7 @@ class Pure_Widget extends WP_Widget
         $instance = array();
         $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : 'Latest publications';
         $instance['url'] = (!empty($new_instance['url'])) ? strip_tags($new_instance['url']) : null;
+        $instance['org'] = (!empty($new_instance['org'])) ? strip_tags($new_instance['org']) : null;
         $instance['noitems'] = (!empty($new_instance['noitems'])) ? strip_tags($new_instance['noitems']) : 5;
         $instance['rendering'] = (!empty($new_instance['rendering'])) ? strip_tags($new_instance['rendering']) : "vancouver";
         return $instance;
