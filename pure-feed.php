@@ -52,6 +52,7 @@ class Pure_Widget extends WP_Widget
     {
         $title = !empty($instance['title']) ? $instance['title'] : esc_html__('', 'text_domain');
         $url = !empty($instance['url']) ? $instance['url'] : NULL;
+	$org = !empty($instance['org']) ? $instance['org'] : NULL;
 	$noitems = !empty($instance['noitems']) ? $instance['noitems'] : 5;
         $rendering = !empty($instance['rendering']) ? $instance['rendering'] : NULL;
 ?>
@@ -106,11 +107,16 @@ class Pure_Widget extends WP_Widget
         <label for="<?php echo esc_attr($this->get_field_id('rendering'));?>">
             <?php esc_attr_e('Rendering:');?>
         </label>
-        <input id="<?php echo esc_attr($this->get_field_id('rendering')); ?>"
-               class="url"
-               name="<?php echo esc_attr($this->get_field_name('rendering'));?>"
-               type="text"
-               value="<?php echo isset($rendering) ? esc_attr($rendering) : NULL; ?>">
+        <select id="<?php echo esc_attr($this->get_field_id('rendering')); ?>"
+		class="rendering"
+		name="<?php echo esc_attr($this->get_field_name('rendering'));?>">
+	    <?php
+	    $renderings = simplexml_load_file('https://pure.itu.dk/ws/rest//getAllowedFormatsRequest?type=dk.atira.pure.api.shared.model.researchoutput.ResearchOutput');
+	    foreach($renderings->xpath('//core:GetAllowedFormatsResponse/core:format') as $rendering_option) {
+		echo "<option value=$rendering_option " . (($rendering_option == esc_attr($rendering)) ? "selected" : NULL) . ">$rendering_option</option>";
+	    }
+	    ?>
+	</select>
     </p>
 <?php
 }
