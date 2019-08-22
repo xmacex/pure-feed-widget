@@ -33,21 +33,13 @@ class Pure_Widget extends WP_Widget
         echo $args['after_title'];
 
         if (!empty($instance['url'])) {
-            // $xml = simplexml_load_file($instance['url']);
-            $this->datasource = new Pure(
-                $instance['url'],
-                $instance['apikey'],
-                $instance['org'],
-                NULL,
-                $noitems=$instance['noitems'],
-                $orderby='-publicationYear',
-                $rendering=$instance['rendering'],
-                $orgagg='RecursiveContentValueAggregator');
+            $this->datasource = new Pure($instance['url'], $instance['apikey']);
 
             echo "<ul class='references'>";
-            foreach($this->datasource->publications as $pub)
+            $publications = $this->datasource->get_research_outputs($org=$instance['org'], $size=$instance['size'], $rendering=$instance['rendering']);
+            foreach($publications as $pub)
             {
-                print $pub->toHtml();
+                print $pub->asHtml();
                 print(PHP_EOL);
             }
             echo '</ul>';
@@ -63,7 +55,7 @@ class Pure_Widget extends WP_Widget
         $url = !empty($instance['url']) ? $instance['url'] : NULL;
         $org = !empty($instance['org']) ? $instance['org'] : NULL;
         $apikey = !empty($instance['apikey']) ? $instance['apikey'] : NULL;
-        $noitems = !empty($instance['noitems']) ? $instance['noitems'] : 5;
+        $size = !empty($instance['size']) ? $instance['size'] : 5;
         $rendering = !empty($instance['rendering']) ? $instance['rendering'] : NULL;
 ?>
     <!-- Widget title -->
@@ -117,21 +109,21 @@ class Pure_Widget extends WP_Widget
     </p>
     <!-- Number of items to retrieve -->
     <p>
-        <label for="<?php echo esc_attr($this->get_field_id('noitems'));?>">
+        <label for="<?php echo esc_attr($this->get_field_id('sizes'));?>">
             <?php esc_attr_e('Number of items:');?>
         </label>
-        <input id="<?php echo esc_attr($this->get_field_id('noitems')); ?>"
-               class="noitems"
-               name="<?php echo esc_attr($this->get_field_name('noitems'));?>"
+        <input id="<?php echo esc_attr($this->get_field_id('size')); ?>"
+               class="size"
+               name="<?php echo esc_attr($this->get_field_name('size'));?>"
                type="number"
                min="1"
                max="50"
-               value="<?php echo isset($noitems) ? esc_attr($noitems) : 5; ?>">
+               value="<?php echo isset($size) ? esc_attr($size) : 5; ?>">
     </p>
     <!-- Rendering style, available style retrieved from endpoint -->
     <p>
         <label for="<?php echo esc_attr($this->get_field_id('rendering'));?>">
-            <?php esc_attr_e('Rendering:');?>
+            <?php esc_attr_e('Style:');?>
         </label>
         <select id="<?php echo esc_attr($this->get_field_id('rendering')); ?>"
 		class="rendering"
@@ -142,11 +134,11 @@ class Pure_Widget extends WP_Widget
 	    $renderings = simplexml_load_file($formats_url);
 
 	    if($renderings) {
-		foreach($renderings->xpath('//renderings/rendering') as $rendering_option) {
-		    echo "<option value=$rendering_option " . (($rendering_option == esc_attr($rendering)) ? "selected" : NULL) . ">$rendering_option</option>";
-		}
+            foreach($renderings->xpath('//renderings/rendering') as $rendering_option) {
+                echo "<option value=$rendering_option " . (($rendering_option == esc_attr($rendering)) ? "selected" : NULL) . ">$rendering_option</option>";
+            }
 	    } else {
-		echo "<p>Fetching publications failed</p>";
+            echo "<p>Fetching styles failed</p>";
 	    }
 	    ?>
 	</select>
@@ -161,7 +153,7 @@ class Pure_Widget extends WP_Widget
         $instance['url'] = (!empty($new_instance['url'])) ? strip_tags($new_instance['url']) : null;
         $instance['apikey'] = (!empty($new_instance['apikey'])) ? strip_tags($new_instance['apikey']) : null;
         $instance['org'] = (!empty($new_instance['org'])) ? strip_tags($new_instance['org']) : null;
-        $instance['noitems'] = (!empty($new_instance['noitems'])) ? strip_tags($new_instance['noitems']) : 5;
+        $instance['size'] = (!empty($new_instance['size'])) ? strip_tags($new_instance['size']) : 5;
         $instance['rendering'] = (!empty($new_instance['rendering'])) ? strip_tags($new_instance['rendering']) : "vancouver";
         return $instance;
     }

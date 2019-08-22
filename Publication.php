@@ -1,11 +1,27 @@
 <?php
+/**
+ * A publication
+ */
 class Publication
 {
-    public $rendered;
-    public function __construct($elem, $rendering='vancouver')
+    /**
+     * Constructor.
+     *
+     * If $rendering is given, then $data is already rendered on
+     * serverside or otherwise. If it is not given, then rendering is
+     * left to us to do.
+     *
+     * @param string $data      Bibliographical data
+     * @param string $rendering Prerendering style, e.g. apa, vancouver
+     */
+    public function __construct(string $data, string $rendering=NULL)
     {
         $this->rendering = $rendering;
-        $this->rendered = $elem;
+        if($this->rendering) {
+            $this->rendered = $data;
+        } else {
+            throw new Exception('Parsing of raw API data not implemented yet');
+        }
     }
 
     public function __toString()
@@ -13,7 +29,7 @@ class Publication
         return (string)$this->rendered->asXML();
     }
 
-    public function toHtml()
+    public function asHtml()
     {
         $output = "<li class='item'>";
         $output .= (string)$this->rendered;
