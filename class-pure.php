@@ -54,20 +54,21 @@ class Pure {
 		$query->addChild( 'publicationStatuses' )->addChild( 'publicationStatus', '/dk/atira/pure/researchoutput/status/published' );
 		$query->addChild( 'forOrganisationalUnits' )->addChild( 'uuids' )->addChild( 'uuid', $org );
 
-		/*
-		// Parameters in an array would be more native than making XML things. A function could turn an array to XML for wp_remote_post to send
-		$query = [
-			'researchOutputsQuery' => [
-				'size'                   => $size,
-				'linkingStrategy'        => 'portalLinkingstrategy',
-				'locales'                => [ 'locale' => 'en_GB' ],
-				'renderings'             => [ 'rendering' => $rendering ],
-				'orderings'              => [ 'ordering' => $order ],
-				'publicationStatuses'    => [ 'publicationStatus' => '/dk/atira/pure/researchoutput/status/published' ],
-				'forOrganisationalunits' => [ 'uuids' => [ 'uuid' => $org ] ],
-			],
+		// Parameters in an array would be more native than making XML
+		// things. A function could turn an array to XML for
+		// wp_remote_post to send
+		$params = [
+			'size'                   => $size,
+			'linkingStrategy'        => 'portalLinkingStrategy',
+			'locales'                => [ 'locale' => 'en_GB' ],
+			'renderings'             => [ 'rendering' => $rendering ],
+			'orderings'              => [ 'ordering' => $order ],
+			'publicationStatuses'    => [ 'publicationStatus' => '/dk/atira/pure/researchoutput/status/published' ],
+			'forOrganisationalUnits' => [ 'uuids' => [ 'uuid' => $org ] ],
 		];
-		*/
+
+		$query = new SimpleXMLElement( '<researchOutputsQuery/>' );
+		$this->array_to_xml( $query, $params );
 
 		$xml = $this->query( $endpoint, $query );
 
@@ -80,9 +81,9 @@ class Pure {
 	/**
 	 * Query the API
 	 *
-	 * @param string           $endpoint  API endpoint, ie resource type.
-	 * @param SimpleXMLElement $query     Query parameters as an SimpleXMLElement.
-	 * @return string          $xml       Representation of the response.
+	 * @param  string           $endpoint  API endpoint, ie resource type.
+	 * @param  SimpleXMLElement $query     Query parameters as an SimpleXMLElement.
+	 * @return string           $xml       Representation of the response.
 	 */
 	private function query( string $endpoint, SimpleXMLElement $query ) {
 		$url  = $this->url . '/' . $endpoint . '?' . http_build_query( [ 'apiKey' => $this->apikey ] );
@@ -95,5 +96,31 @@ class Pure {
 
 		$xml = simplexml_load_string( wp_remote_retrieve_body( $response ) );
 		return $xml;
+	}
+
+	/**
+	 * Populates and XML element with an array, in place.
+	 *
+	 * @param SimpleXML $object XML object to populate.
+	 * @param array     $data   Data to push to the XML object.
+	 *
+	 * @author Francis Lewis
+	 *
+	 * From here https://stackoverflow.com/a/19987539/1760439
+	 */
+	private function array_to_xml( SimpleXMLElement $object, array $data ) {
+		foreach ( $data as $key => $value ) {
+			if ( is_array( $value ) ) {
+				$new_object = $object->addChild( $key );
+				$this->array_to_xml( $new_object, $value );
+			} else {
+				// if the key is an integer, it needs text with it to actually work.
+				if ( $key == (int) $key ) {
+					$key = "$key";
+				}
+
+				$object->addChild( $key, $value );
+			}
+		}
 	}
 }
