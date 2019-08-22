@@ -27,7 +27,7 @@ class Test_Pure_Widget extends WP_UnitTestCase
         $w->widget($args, $instance);
         $output = ob_get_clean();
 
-        $this->assertContains("<div><h2>Latest publications</h2></div>", $output);
+        $this->assertEquals("<div><h2>Latest publications</h2></div>", $output);
     }
 
     function test_with_url_should_retrieve_fetch_and_print_data()
@@ -46,7 +46,7 @@ class Test_Pure_Widget extends WP_UnitTestCase
         $w->widget($args, $instance);
         $output = ob_get_clean();
 
-        $this->assertContains("<div><h2>Latest publications</h2><ul class='references'><li class='item'><span class='authors'>", $output);
+        $this->assertContains("<div><h2>Latest publications</h2><ul class='references'><li class='item'><div class", $output);
     }
 
     function test_with_unretrievable_url_should_raise_error()
