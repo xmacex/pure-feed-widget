@@ -36,17 +36,18 @@ class Pure_Widget extends WP_Widget
             // $xml = simplexml_load_file($instance['url']);
             $this->datasource = new PureWsRestRendering(
                 $instance['url'],
+                $instance['apikey'],
                 $instance['org'],
                 NULL,
                 $noitems=$instance['noitems'],
-                $orderby='publicationDate',
+                $orderby='-publicationYear',
                 $rendering=$instance['rendering'],
                 $orgagg='RecursiveContentValueAggregator');
 
             echo "<ul class='references'>";
             foreach($this->datasource->publications as $pub)
             {
-                print($pub->toHtml() . PHP_EOL);
+                print $pub->toHtml();
                 print(PHP_EOL);
             }
             echo '</ul>';
@@ -151,9 +152,9 @@ class Pure_Widget extends WP_Widget
 	</select>
     </p>
 <?php
-}
+    }
 
-// Save options
+    // Save options
     public function update($new_instance, $old_instance) {
         $instance = array();
         $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : 'Latest publications';
