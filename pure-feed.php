@@ -7,6 +7,8 @@
   Author URI: https://github.com/xmacex
 */
 
+require_once('Publication.php');
+
 class Pure_Widget extends WP_Widget
 {
     // Constructor
@@ -77,80 +79,6 @@ class Pure_Widget extends WP_Widget
         $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : 'Latest publications';
         $instance['url'] = (!empty($new_instance['url'])) ? strip_tags($new_instance['url']) : null;
         return $instance;
-    }
-}
-
-class Publication
-{
-    public $authors = [];
-    public $date;
-    public $title;
-    public $link;
-    public $publication;
-
-    public function __construct($elem)
-    {
-        $desc = new SimpleXMLElement($elem->description);
-        foreach($desc->div[0]->a as $related)
-        {
-            if($related["rel"] == "Person")
-            {
-                $name = $related->span;
-                array_push($this->authors, $name);
-            }
-        }
-        $this->title = (string)$elem->title;
-        $this->link = $elem->link;
-        $this->publication = (string)$desc->div[1]->div[1]->table->tbody->tr[1]->td;
-        // $this->date = (string)$desc->div[0]->span[0];
-        $this->date = strtotime($desc->div[0]->span[0]);
-    }
-
-    public function __toString()
-    {
-        return implode(", ", $this->authors ) . $this->title . $this->date . $this->publication;
-    }
-
-    private function authString()
-    {
-        return implode(", ", $this->authors);
-    }
-
-    private function titleHtml($link=true)
-    {
-        $output = "<span class='title'>";
-        if ($link)
-        {
-            $output .= "<a href='" . $this->link . "'>" . $this->title . "</a>";
-        }
-        else
-        {
-            $output .= $this->title;
-        }
-        $output .= "</span>";
-
-        return $output;
-    }
-
-    private function year()
-    {
-        return date('Y', $this->date);
-    }
-
-    public function toHtml()
-    {
-        $output = "<li class='item'>";
-        $output .= "<span class='authors'>" . $this->authString() . "</span>";
-        // $output .= ". ";
-        $output .= " ";
-        // $output .= "<span class='date'>" . $this->date . "</span>";
-        $output .= "<span class='date'>" . $this->year() . "</span>";
-        $output .= ". ";
-        $output .= $this->titleHtml();
-        $output .= ". ";
-        $output .= "<span class='publication'>" . $this->publication . "</span>";
-        $output .= "</li>";
-        return $output;
     }
 }
 
