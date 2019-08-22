@@ -1,7 +1,12 @@
 <?php
 /**
  * A publication
+ *
+ * @package PureFeed;
  */
+
+namespace PureFeed;
+
 class Publication {
 	/**
 	 * Constructor.
