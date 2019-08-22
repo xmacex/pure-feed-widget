@@ -19,7 +19,7 @@ class Pure {
 	 * Constructs a data source.
 	 *
 	 * @param string $url     URL to grab data from.
-	 * @param string $apikey  Rendering style.
+	 * @param string $apikey  Api key.
 	 */
 	public function __construct( string $url, string $apikey ) {
 		$this->url    = $url;
