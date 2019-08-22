@@ -2,17 +2,26 @@
 /**
  * Plugin Name: Pure feed widget
  * Plugin URL: https://github.com/xmacex/pure-widget
- * Description: Render feeds from Elsevier Pure systems
- * Version: 0.0.1
+ * Description: Render content from Elsevier Pure systems.
+ * Version: 0.0.2
  * Author: Mace Ojala
  * Author URI: https://github.com/xmacex
+ * Licence: GNU GPLv3
+ * Licence URL: https://www.gnu.org/licenses/gpl-3.0.html
+ *
+ * See here though for merging this WordPress docblock with phpdoc docblock https://developer.wordpress.org/plugins/plugin-basics/header-requirements/
  */
 
 require_once('Pure.php');
 
+/**
+ * A WordPress widget for listing data from an Elsevier Pure systems.
+ */
 class Pure_Widget extends WP_Widget
 {
-    // Constructor
+    /**
+     * Constructor.
+     */
     public function __construct() {
         $widget_ops = array(
             'classname' => 'pure_widget',
@@ -23,7 +32,15 @@ class Pure_Widget extends WP_Widget
         $this->datasource = NULL;
     }
 
-    // Widget output
+    /**
+     * Widget output.
+     *
+     * Prints nice HTML, or that's the idea.
+     *
+     * @param array $args     Stuff from WordPress
+     * @param array $instance Widget configuration options
+     * @return void 
+     */
     public function widget($args, $instance)
     {
         echo $args['before_widget'];
@@ -47,8 +64,15 @@ class Pure_Widget extends WP_Widget
         echo $args['after_widget'];
     }
 
+    /**
+     * Output widget options form for the WordPress admin interface.
+     *
+     * Oh dear this is a mess for now, and would benefit from templating.
+     *
+     * @param array $instance Widget configuration options.
+     * @return void
+     */
     // Options form
-    // Oh dear this is a mess for now
     public function form($instance)
     {
         $title = !empty($instance['title']) ? $instance['title'] : esc_html__('', 'text_domain');
@@ -146,7 +170,12 @@ class Pure_Widget extends WP_Widget
 <?php
     }
 
-    // Save options
+    /**
+     * Save widget options.
+     *
+     * @param array $new_instance New widget configuration options.
+     * @param array $old_instance Old widget configuration options.
+     */
     public function update($new_instance, $old_instance) {
         $instance = array();
         $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : 'Latest publications';
