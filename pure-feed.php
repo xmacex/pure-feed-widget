@@ -8,7 +8,7 @@
  * Author URI: https://github.com/xmacex
  */
 
-require_once('PureWsRestRendering.php');
+require_once('Pure.php');
 
 class Pure_Widget extends WP_Widget
 {
@@ -34,7 +34,7 @@ class Pure_Widget extends WP_Widget
 
         if (!empty($instance['url'])) {
             // $xml = simplexml_load_file($instance['url']);
-            $this->datasource = new PureWsRestRendering(
+            $this->datasource = new Pure(
                 $instance['url'],
                 $instance['apikey'],
                 $instance['org'],
