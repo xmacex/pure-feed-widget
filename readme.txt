@@ -8,8 +8,8 @@ Requires PHP: 5.2.4
 Stable tag: 4.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
- 
-A widget for displaying feeds of academic publications from Elsevier Pure systems in WordPress.
+
+A widget for listing academic publications from Elsevier Pure in WordPress.
  
 == Description ==
 
