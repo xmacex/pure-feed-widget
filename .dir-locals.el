@@ -1,3 +1,4 @@
 ((php-mode . ((indent-tabs-mode . t)
-              (flycheck-phpcs-standard . "WordPress")
-              (flychecker-checker-error-threshold . 600))))
+              (flycheck-phpcs-standard . "WordPress"))))
+
+;; consider (setq php-lineup-cascaded-calls . t)
