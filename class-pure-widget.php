@@ -21,7 +21,7 @@ class Pure_Widget extends \WP_Widget {
 			'classname'   => 'pure_widget',
 			'description' => 'Pure feed widget',
 		);
-		parent::__construct( 'pure_widget', 'Pure widget', $widget_ops );
+		parent::__construct( 'pure_widget', 'Pure Feed widget', $widget_ops );
 
 		$this->datasource = null;
 	}
