@@ -9,20 +9,15 @@ class Publication
 
     public function __construct($elem)
     {
-        $desc = new SimpleXMLElement($elem->description);
-
-        foreach($desc->div[0]->a as $related)
+        foreach($elem->xpath('stabl:persons/person-template:personAssociation/person-template:name') as $nameelem)
         {
-            if($related["rel"] == "Person")
-            {
-                $name = (string)$related->span;
-                array_push($this->authors, $name);
-            }
+            $name = (string)$nameelem->xpath('core:lastName')[0] . ", " . (string)$nameelem->xpath('core:firstName')[0];
+            array_push($this->authors, $name);
         }
-        $this->date = strtotime($desc->div[0]->span[0]);
-        $this->title = (string)$elem->title;
-        $this->link = (string)$elem->link;
-        $this->publication = (string)$desc->div[1]->div[1]->table->tbody->tr[1]->td;
+        $this->date = (integer)$elem->xpath('stabl:publicationDate/core:year')[0];
+        $this->title = (string)$elem->xpath('stabl:title')[0];
+        $this->link = (string)$elem->xpath('core:portalUrl')[0];
+        $this->publication = '<span style="color: red";>Publication</span>'; // FIXME
     }
 
     public function __toString()
