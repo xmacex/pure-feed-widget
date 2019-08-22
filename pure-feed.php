@@ -33,7 +33,7 @@ class Pure_Widget extends WP_Widget
 
         if (!empty($instance['url'])) {
             // $xml = simplexml_load_file($instance['url']);
-	    $this->datasource = new PureWsRestRendering($instance['url'], NULL, $rendering=$instance['rendering']);
+            $this->datasource = new PureWsRestRendering($instance['url'], NULL, $noitems=$instance['noitems'], $rendering=$instance['rendering']);
             echo "<ul class='references'>";
             foreach($this->datasource->publications as $pub)
             {
@@ -52,7 +52,8 @@ class Pure_Widget extends WP_Widget
     {
         $title = !empty($instance['title']) ? $instance['title'] : esc_html__('', 'text_domain');
         $url = !empty($instance['url']) ? $instance['url'] : NULL;
-	$rendering = !empty($instance['rendering']) ? $instance['rendering'] : NULL;
+	$noitems = !empty($instance['noitems']) ? $instance['noitems'] : 5;
+        $rendering = !empty($instance['rendering']) ? $instance['rendering'] : NULL;
 ?>
     <p>
         <label for="<?php echo esc_attr($this->get_field_id('title'));?>">
@@ -75,6 +76,17 @@ class Pure_Widget extends WP_Widget
                value="<?php echo isset($url) ? esc_attr($url) : NULL; ?>">
     </p>
     <p>
+        <label for="<?php echo esc_attr($this->get_field_id('noitems'));?>">
+            <?php esc_attr_e('Noitems:', 'text_domain');?>
+        </label>
+        <input id="<?php echo esc_attr($this->get_field_id('noitems')); ?>"
+               class="noitems"
+               name="<?php echo esc_attr($this->get_field_name('noitems'));?>"
+               type="text"
+               value="<?php echo isset($noitems) ? esc_attr($noitems) : 5; ?>">
+    </p>
+
+    <p>
         <label for="<?php echo esc_attr($this->get_field_id('rendering'));?>">
             <?php esc_attr_e('Rendering:', 'text_domain');?>
         </label>
@@ -87,14 +99,15 @@ class Pure_Widget extends WP_Widget
 <?php
 }
 
-// Save options
-public function update($new_instance, $old_instance) {
-    $instance = array();
-    $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : 'Latest publications';
-    $instance['url'] = (!empty($new_instance['url'])) ? strip_tags($new_instance['url']) : null;
-    $instance['rendering'] = (!empty($new_instance['rendering'])) ? strip_tags($new_instance['rendering']) : "vancouver";
-    return $instance;
-}
+    // Save options
+    public function update($new_instance, $old_instance) {
+        $instance = array();
+        $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : 'Latest publications';
+        $instance['url'] = (!empty($new_instance['url'])) ? strip_tags($new_instance['url']) : null;
+        $instance['noitems'] = (!empty($new_instance['noitems'])) ? strip_tags($new_instance['noitems']) : 5;
+        $instance['rendering'] = (!empty($new_instance['rendering'])) ? strip_tags($new_instance['rendering']) : "vancouver";
+        return $instance;
+    }
 }
 
 add_action('widgets_init', function() {
