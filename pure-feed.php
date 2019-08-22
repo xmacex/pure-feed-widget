@@ -2,7 +2,7 @@
 /*
   Plugin Name: Pure feed widget
   Plugin URL: https://github.com/xmacex/pure-widget
-  Description: Render Pure feeds
+  Description: Render feeds from Elsevier Pure systems
   Author: Mace Ojala
   Author URI: https://github.com/xmacex
 */
@@ -31,12 +31,13 @@ class Pure_Widget extends WP_Widget
     {
         echo $args['before_widget'];
         echo $args['before_title'];
-        $title = !empty($instance->title) ? $instace->url : esc_html__('Latest publications', 'text_domain');
+        $title = !empty($instance['title']) ? $instance['title'] : esc_html__('Latest publications', 'text_domain');
         echo $title;
         echo $args['after_title'];
 
         $feedurl = $instance['url'];
         $xml = simplexml_load_file($feedurl);
+        // $xml = $instance['xml'];
 
         foreach($xml->channel->item as $item)
         {
@@ -49,9 +50,10 @@ class Pure_Widget extends WP_Widget
 
     // Options form
     // Oh dear this is a mess for now
-    public function form($instance) {
-        $title = !empty($instance->title) ? $instance->title : esc_html__('', 'text_domain');
-        $url = !empty($instance->url) ? $instance->url : esc_html__('Give Pure RSS URL', 'text_domain');
+    public function form($instance)
+    {
+        $title = !empty($instance['title']) ? $instance['title'] : esc_html__('', 'text_domain');
+        $url = !empty($instance['url']) ? $instance['url'] : esc_html__('Give Pure RSS URL', 'text_domain');
         ?>
         <div>
         <label for="<?php echo esc_attr($this->get_field_id('title'));?>">
@@ -78,7 +80,7 @@ class Pure_Widget extends WP_Widget
     // Save options
     public function update($new_instance, $old_instance) {
         $instance = array();
-        $instance['title'] = (!empty($new_instance['url'])) ? strip_tags($new_instance['title']) : 'Latest publications';
+        $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : 'Latest publications';
         $instance['url'] = (!empty($new_instance['url'])) ? strip_tags($new_instance['url']) : 'https://pure.itu.dk/portal/en/organisations/mad-art--design(cf9b4e6a-e1ad-41e3-9475-7679abe7131b)/publications.rss';
         return $instance;
     }
@@ -109,7 +111,7 @@ class Publication
         // $this->date = (string)$desc->div[0]->span[0];
         $this->date = strtotime($desc->div[0]->span[0]);
     }
-    
+
     public function __toString()
     {
         return implode(", ", $this->authors ) . $this->title . $this->date . $this->publication;
