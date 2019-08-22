@@ -23,6 +23,7 @@ class PureWsRestRendering
         $this->orderby = $orderby;
         $this->rendering = $rendering;
         $this->orgagg = $orgagg;
+
         $this->publications = [];
 
         if ($xmldata) {
@@ -46,16 +47,4 @@ class PureWsRestRendering
             $this->publications[] = new RenderedPublication($item, $this->rendering);
         }
     }
-
-    /* This served testing purposes only, so comment out for now.
-    function get_by_title($title)
-    {
-        $item = array_filter($this->publications,
-                             function ($i) use ($title) {
-                                 return $i->title == $title;
-                             }
-        );
-        return [(string)$title => $item];
-    }
-    */
 }
