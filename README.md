@@ -6,11 +6,11 @@ This widget displays publications from [Elsevier Pure](https://www.elsevier.com/
 
 Pure offers rendering items in various bibliographical style. Below is example output with the [APA style](https://apastyle.apa.org/) style, without any fancy CSS.
 
-![Below is example output with the APA style style, without any fancy CSS.](example_output-apa.png)
+![Example output with the APA style style, without any fancy CSS.](assets/screenshot-1.png)
 
 Example output with the *short* style.
 
-![Example output with the *short* style.](example_output-short.png)
+![Example output with the *short* style.](assets/screenshot-2.png)
 
 # Installation
 
