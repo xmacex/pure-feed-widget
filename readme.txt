@@ -11,8 +11,10 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 A widget for displaying feeds of academic publications from Elsevier Pure systems in WordPress.
  
 == Description ==
- 
-This widget offers a cleaned experience for [Elsevier Pure](https://www.elsevier.com/solutions/pure) feeds compared to the RSS feeds. The primary intented use scenario is to list newest publications in a widget on a webpage of a research group or lab or other organizational unit.
+
+This widget displays publications from [Elsevier Pure](https://www.elsevier.com/solutions/pure) institutional repositories. Compared to the RSS feeds, this hopes to provide a cleaner and more configurable output of publications.
+
+Pure offers rendering items in various bibliographical style.
 
 == Installation ==
 
