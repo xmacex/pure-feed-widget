@@ -33,7 +33,7 @@ class Pure_Widget extends WP_Widget
 
         if (!empty($instance['url'])) {
             // $xml = simplexml_load_file($instance['url']);
-            $this->datasource = new PureWsRestRendering($instance['url']);
+            $this->datasource = new PureWsRestRendering($instance['url'], NULL, $rendering='vancouver');
             echo "<ul class='references'>";
             foreach($this->datasource->publications as $pub)
             {
